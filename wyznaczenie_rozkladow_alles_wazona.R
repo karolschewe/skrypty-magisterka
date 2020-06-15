@@ -8,7 +8,7 @@
 library(dplyr)
 
 
-plotted.year<-2019
+plotted.year<-2005
 
 
 
@@ -42,10 +42,18 @@ if(!exists("wyniki")){wyniki<-read.csv("D:/dane magisterka/WYBORY_DO_SEJMU_ZBIOR
 
 wyniki.year<-wyniki[which(wyniki$YEAR == plotted.year),]
 
+wszystkie_glosy<-sum(wyniki.year$VOTES,na.rm = T)
 
-df.mean<-wyniki.year%>%
+df.wagi<-wyniki.year%>%
+  group_by(GMINA)%>%
+  summarise(waga.gmina = sum(VOTES,na.rm = T))
+wyniki.wagi<-left_join(wyniki.year, df.wagi, by="GMINA")
+wyniki.wagi$udzial.posredni<-(wyniki.wagi$VOTES_PERCENTAGE*wyniki.wagi$waga.gmina)/wszystkie_glosy
+
+
+df.mean<-wyniki.wagi%>%
   group_by(POLITICAL_PARTY)%>%
-  summarise(mean.party = mean(VOTES_PERCENTAGE, na.rm = T))%>%
+  summarise(mean.party = sum(udzial.posredni, na.rm = T))%>%
   filter(mean.party > 1)
 
 

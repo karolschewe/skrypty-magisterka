@@ -4,7 +4,38 @@ library(dplyr)
 # potem nastepuje renormalizacja do 100%, aby nie spowodowala ona przeklamania wypelnienie powinno byc na poziomie ok. 99%
 
 
-wyniki<-read.csv("D:/dane magisterka/WYBORY_DO_SEJMU_KONSERWATYZM.csv")
+wyniki<-read.csv("D:/dane magisterka/WYBORY_DO_SEJMU_KONSERWATYZM.csv",colClasses = c("TERYT"= "factor"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # grupowanie po swiatopogladzie
 wyniki.binary<-wyniki%>%

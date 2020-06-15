@@ -17,6 +17,23 @@ library(reshape2)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 sejm2005.turnout<-read.csv(
   "D:/dane magisterka/2005parlament/crawling po gminie/frekwencja_wybory_2005_po_gminach.csv", encoding = 'UTF-8',
   colClasses = c("numeric","factor","character","character","numeric","numeric","numeric","numeric"))
@@ -114,10 +131,11 @@ big.ass.table[which(
     grepl("KORWiN",big.ass.table$POLITICAL_PARTY)),]$POLITICAL_PARTY<-"KORWIN"
 big.ass.table[which(
   grepl("Samoobrona R",big.ass.table$POLITICAL_PARTY) |
+    grepl(" Wyborczy Samoobrona",big.ass.table$POLITICAL_PARTY) |
     grepl("Samoobrona A",big.ass.table$POLITICAL_PARTY)),]$POLITICAL_PARTY<-"SAMOOBRONA"
 big.ass.table[which(
   grepl("MNIEJSZOŚĆ NIEMIECKA",big.ass.table$POLITICAL_PARTY) |
-    grepl("Mniejszość Niemiecka",big.ass.table$POLITICAL_PARTY)),]$POLITICAL_PARTY<-"SAMOOBRONA"
+    grepl("Mniejszość Niemiecka",big.ass.table$POLITICAL_PARTY)),]$POLITICAL_PARTY<-"Mniejszość Niemiecka"
 
 
 write.csv(big.ass.table, file = "D:/dane magisterka/WYBORY_DO_SEJMU_ZBIORCZO2.csv",row.names = F)

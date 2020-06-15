@@ -13,19 +13,31 @@ library(readxl)
 
 
 
-
-
-
-wyniki<-read.csv("D:/dane magisterka/WYBORY_DO_SEJMU_ZBIORCZO2.csv")
-
-
-
-
-wyniki.year.2005<-wyniki%>%
-  filter(YEAR == 2005)
-
+wyniki<-read.csv("D:/dane magisterka/WYBORY_DO_SEJMU_ZBIORCZO2.csv",colClasses = c("TERYT"= "factor"))
 
 slownik.mapowanie<-read_xlsx("partie.xlsx")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 wyniki.konserwatyzm<-left_join(wyniki,slownik.mapowanie, by = c("POLITICAL_PARTY" = "partia"))
 
@@ -54,11 +66,11 @@ wyniki.konserwatyzm%>%
 
 # braki na poziomie gminy
 sumy.gmina<-wyniki.konserwatyzm%>%
-  group_by(YEAR,GMINA,przyporzadkowanie)%>%
+  group_by(YEAR,TERYT,przyporzadkowanie)%>%
   summarise(poparcie=sum(VOTES, na.rm = T))
 
 procenty.gmina<-sumy.gmina%>%
-  group_by(YEAR,GMINA)%>%
+  group_by(YEAR,TERYT)%>%
   mutate(procent = poparcie/sum(poparcie))%>%
   filter(przyporzadkowanie %in% c("???","????"))%>%
   arrange(desc(procent))%>%
